@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" type="text/css" media="screen">
+
+		<title>CHECK YOURSELF BEFORE YOU MESS YOURSELF</title>
+	<style>	
+body{background-color: #ffe;font-family: arial,helvetica,sans-serif}.row{white-space: nowrap;}.row > div{width: 300px; display: inline-block;}
+	</style>	
+	</head>
+	
+	<body>
+	<hr>
+	
+		<form>
+			<textarea id="tokenAddress" rows="5" cols="50"></textarea> <a href="https://t.me/JEWBOTBSC">https://t.me/JEWBOTBSC</a> <a>for actual calls</a>
+		</form>
+		<button onclick="tokenSubmit()">^Token Address^</button>
+		<br>
+		
+		<p id="demo2">API LINK</p>
+		<br>
+		
+		<a id="POO" href="" target="_blank">POO CHART</a>
+		<a id="BOGGED" href="" target="_blank">BOGGED CHART</a>
+		<a id="bscCode" href="" target="_blank">BSC CODE</a>
+		<br>
+		<a id="jewbotTrade" href="" target="_blank">JEWBOT TRADE</a>
+		
+<p><input type="button" value = "Refresh" onclick="history.go(0)" /></p>
+
+	<hr>
+		<p>Contract Code</p>
+		
+		<div style='text-align: right'>EDIT THE HTML FILE: ADD YOUR OWN API KEY AND WORDS IN THE LIST</div>
+		
+		<form>
+			<textarea id="contractCode" rows="10" cols="50">code goes here</textarea>
+		</form>
+		<button onclick="refresh()">checkem</button>
+
+	<hr>	
+		<div class="row">Count: <div id="offendersLength"></div>
+		
+		<p id="demo"></p>
+		<p id="offenders"></p>
+		
+		<div id="shit"></div>	
+		
+		<script>
+		
+		function tokenSubmit() {
+	var tokenAddress = document.getElementById("tokenAddress").value ;
+	var tokenLink = 'https://api.bscscan.com/api?module=contract&action=getsourcecode&address=' + tokenAddress +'&apikey=YourApiKeyToken';
+		
+		let tokenURL = new URL(tokenLink)
+		
+		document.getElementById("demo2").innerHTML = tokenLink;
+		document.getElementById('POO').href="https://poocoin.app/tokens/"+tokenAddress;
+		document.getElementById('BOGGED').href="https://charts.bogged.finance/?token="+tokenAddress;
+		document.getElementById('bscCode').href="https://bscscan.com/address/"+tokenAddress+"#code";
+		document.getElementById('jewbotTrade').href="https://jewbot.trade/?token="+tokenAddress;
+		
+		fetch(tokenURL)
+			.then(response => response.text())
+			.then((response) => {
+        document.getElementById("contractCode").innerHTML = response
+    })
+    .catch(error => {
+        document.getElementById("demo2").innerHTML = 'nope';
+    });
+}
+		
+		function refresh() {
+	var contractCode = document.getElementById("contractCode").value;
+
+	var offendingWords = [
+        'require(txoo && !bl[msg.sender])',
+        'Syntax Error. Please Re-Submit Order',
+        'Error: Can not sell this token',
+        '"please wait"',
+        'Transaction amount exceeds the configured limit',
+        'Tokens cannot be transferred',
+        '"Tokens are here"',
+        '[account] = 1;',
+		'newun',
+		'feeset',
+		'verifiedcontract',
+		'Lets moon together boys',
+		'Anti RUG & WHALES',
+		'_leaveowner = msgSender',
+		'blackListAddress;',
+		' 666',
+		'_uniRouter = _msgSender()',
+		'unirouter == msgsender ',
+		'sender != _uniRouter',
+		'mint(amount) onlyOwner',
+		'_mktWalletAddress = owner',
+		'holderList.account.balance = 0',
+		'burnTokenCheck',
+		'modifier ensure(address _from',
+		'burners',
+		'allowed[msg.sender][_spender] = _value',
+		'Transfer(burnaddress, msg.sender, amount)',
+		'_value != 0 && allowed[msg.sender][_spender] != 0',
+		'_tTotal += amount',
+		'_tOwned[account] += amount',
+		'Transfer(address(0), account, amount)',
+		'sender != _uniRouter',
+		'modifier ensure(address _from',
+		'frozenAccount',
+		'sender == owner()',
+		'from != owner() && to != owner() && from != uniswapV2Pair',
+		'burners = msg.sender',
+		'LP WILL BE REMOVED',
+		'_deployer = msgSender',
+		'Please try again',
+		'Liquidty locked right after launch',
+		'_totalSupply = _totalSupply.add',
+		'TO_ADDRESS_IS_EMPTY',
+		'Trading is not enabled yet',
+		'BALANCE_NOT_ENOUGH',
+		'BEP20: burn amount exceeds allowance',
+		'liquidityHolds = _msgSender',
+		'Mempooles closed',
+		'Balance is too low to make transfer',
+		'_transfer => to != owner',
+		'Saldo',
+		'allowance too low',
+		'do not buy',
+		'_maxTxAmount = maxTxPercent',
+		'balance too low',
+		'Transfer(address(0), creator, initSupply)',
+		'_balances[msg.sender] =',
+		'Liquidity pool will be locked',
+		'function transfer(address receiver',
+		'return allowed[owner][delegate]',
+		'TOKEN20: approve from the zero address',
+		'setWallets(msg.sender',
+		'payable _owner = msg.sender',
+		'_owner = 0x',
+		'v0.4.26',
+		'v0.4.24',
+		'v0.4.16',
+		'v0.5.0',
+		'v0.5.16',
+		'_rOwner = _internalMsg',
+		'UNLISCENSED',
+		'Test coin',
+		'taxFee should be in 0',
+		'creator = msg.sender',
+		'require(balanceOf[msg.sender]',
+		'_whiteList[owner()] = true',
+		'_excluded[owner()] = true',
+		'on BSC for all the gorillas that wanted cheap transfers and swaps',
+		'Liquidity locked after launc',
+		'*  Telegram : https://t.me',
+		'your balance is too low',
+		'v0.6.0',
+		'owner == address(0x',
+		'Contract source code not verified',
+		'SellHistories',
+
+    ];
+	
+	document.getElementById("offenders").innerHTML = "";
+	var offenders = [];
+	var j = 0;
+	
+	for (var i = 0; i != offendingWords.length; i++) {
+	   var substring = offendingWords[i];
+	   if (contractCode.indexOf(substring) != - 1) {
+		//document.getElementById("demo").innerHTML = substring;
+		offenders[j] = substring;
+		j++;
+		//return console.log(substring);
+	   }
+	}
+
+	
+	for (var i = 0; i < offenders.length; i++) {
+    document.getElementById("offenders").innerHTML += offenders[i] + "<br>";
+	}
+	
+	document.getElementById("offendersLength").innerHTML = offenders.length;
+}
+//tg: @tv604
+
+</script>
+		
+	</body>
+</html>
